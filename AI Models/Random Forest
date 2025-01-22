@@ -1,0 +1,7 @@
+from sklearn.ensemble import RandomForestClassifier
+
+def train_fraud_detection_model(data):
+    X, y = data[:, :-1], data[:, -1]
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X, y)
+    return model
