@@ -1,0 +1,15 @@
+def aes_decrypt(key, ciphertext):
+    # Extract IV and ciphertext
+    iv = ciphertext[:16]
+    actual_ciphertext = ciphertext[16:]
+
+    # Decrypt with AES
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
+    decryptor = cipher.decryptor()
+    decrypted_padded = decryptor.update(actual_ciphertext) + decryptor.finalize()
+
+    # Remove padding
+    unpadder = sym_padding.PKCS7(128).unpadder()
+    decrypted_data = unpadder.update(decrypted_padded) + unpadder.finalize()
+
+    return decrypted_data.decode()
